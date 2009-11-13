@@ -47,15 +47,9 @@ function flickr_context_tags_flickr_user_submit($form, $form_state) {
 function flickr_context_tags_settings() {
   $form = array();
   
-  $mt_ns = variable_get('flickr_context_tags_mech_namespace', '');
-  //Make a qualified guess
-  if (empty($mt_ns)) {
-    $matches = array();
-    $site_name = variable_get('site_name','');
-    if (preg_match('/^\s*([^\s\.]+)/', $site_name, $matches)) {
-      $mt_ns = drupal_strtolower($matches[1]);
-    }
-  }
+  // Set machine tag name space to current domain, if not already set
+  $url = parse_url(url('', array('absolute' => TRUE)));
+  $mt_ns = variable_get('flickr_context_tags_mech_namespace', $url['host']);
   
   $form['flickr_context_tags_mech_namespace'] = array(
     '#type' => 'textfield',
