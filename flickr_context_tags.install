@@ -3,10 +3,20 @@
 
 function flickr_context_tags_install() {
   drupal_install_schema('flickr_context_tags');
+
+  $url = parse_url(url('', array('absolute' => TRUE)));
+  variable_set('flickr_context_tags_mech_namespace', $url['host']);
 }
 
 function flickr_context_tags_uninstall() {
   drupal_uninstall_schema('flickr_context_tags');
+
+  variable_del('flickr_context_tags_contexts');
+  variable_del('flickr_context_tags_mech_namespace');
+  variable_del('flickr_context_tags_userid');
+  variable_del('flickr_context_tags_default_place_id');
+  variable_del('flickr_context_tags_force_default_place_id');
+  variable_del('flickr_context_tags_size');
 }
 
 function flickr_context_tags_schema() {
